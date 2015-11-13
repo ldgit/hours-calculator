@@ -67,6 +67,7 @@ class TestHoursCalculator(unittest.TestCase):
 
     def test_ignore_blank_spaces_arround_hour_strings(self):
         self.assertEqual("-2:10", self.calculator.add("   -1:10", "-1:00   "))
+        self.assertEqual("-1:20", self.calculator.add(*[u'1:00', u'-2:20']))
 
     def test_integration(self):
         self.assertEqual("05:00", self.calculator.add("1:65", "-1.00", '4.70', '-0.75'))
