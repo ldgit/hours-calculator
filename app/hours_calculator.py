@@ -10,7 +10,8 @@ class HoursCalculator():
         total_minutes = 0;
 
         for hour in args:
-            if hour.strip() == '':
+            hour = hour.strip()
+            if hour == '':
                 continue
             if not self.is_valid_format(hour):
                 return 'NaN'
@@ -42,6 +43,6 @@ class HoursCalculator():
         return -total_minutes if change_sign else total_minutes
 
     def is_valid_format(self, hour):
-        pattern = re.compile('^-{0,1}\d+[.:]\d+$')
+        pattern = re.compile('^\s*-{0,1}\d+[.:]\d+\s*$')
 
         return pattern.search(hour) is not None

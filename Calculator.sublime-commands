@@ -1,0 +1,6 @@
+[
+    {
+        "caption": "Calculate: Total Hours From Selection",
+        "command": "calculate_hours"
+    }
+]
