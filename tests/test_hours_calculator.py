@@ -57,7 +57,7 @@ class TestHoursCalculator(unittest.TestCase):
         self.assertEqual("-2:10", self.calculator.add("-1:10", "-1:00"))
         self.assertEqual("-3:40", self.calculator.add("-1:10", "-1:00", "-1.30"))
 
-    def test_large_numbers_in_minutes(self):
+    def test_large_hours_and_minutes(self):
         self.assertEqual("113:35", self.calculator.add("111:155"))
 
     def test_skip_empty_strings(self):
@@ -67,6 +67,8 @@ class TestHoursCalculator(unittest.TestCase):
 
     def test_ignore_blank_spaces_arround_hour_strings(self):
         self.assertEqual("-2:10", self.calculator.add("   -1:10", "-1:00   "))
+
+    def test_input_hours_as_array(self):
         self.assertEqual("-1:20", self.calculator.add(*[u'1:00', u'-2:20']))
 
     def test_integration(self):

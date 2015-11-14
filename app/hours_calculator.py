@@ -1,6 +1,7 @@
 from __future__ import division
 import re
 
+
 class HoursCalculator():
     def add(self, *args):
         """
@@ -13,9 +14,9 @@ class HoursCalculator():
             hour = hour.strip()
             if hour == '':
                 continue
-            if not self.is_valid_format(hour):
+            if not self._is_valid_format(hour):
                 return 'NaN'
-            total_minutes += self.calculate_total_minutes_from_string(hour.replace('.', ':'))
+            total_minutes += self._calculate_total_minutes_from_string(hour.replace('.', ':'))
 
         total_hours = int(total_minutes / 60)
         remaining_minutes = abs(total_minutes) % 60
@@ -25,7 +26,7 @@ class HoursCalculator():
 
         return str.format('{0:02d}:{1:02d}', total_hours, abs(remaining_minutes))
 
-    def calculate_total_minutes_from_string(self, time_string):
+    def _calculate_total_minutes_from_string(self, time_string):
         change_sign = False
         if time_string.startswith('-'):
             time_string = time_string[1:]
@@ -42,7 +43,7 @@ class HoursCalculator():
 
         return -total_minutes if change_sign else total_minutes
 
-    def is_valid_format(self, hour):
+    def _is_valid_format(self, hour):
         pattern = re.compile('^\s*-{0,1}\d+[.:]\d+\s*$')
 
         return pattern.search(hour) is not None
