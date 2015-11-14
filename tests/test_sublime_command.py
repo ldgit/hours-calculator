@@ -47,6 +47,3 @@ class TestSublimeCommand(unittest.TestCase):
 
         self.assertEqual(single_region, self.view.substr_parameter)
         self.assertEqual("\n-36:16", self.view.third_insert_parameter)
-
-    def test_multi_line_selection(self):
-        self.skipTest('todo')
