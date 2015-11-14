@@ -4,4 +4,4 @@ install:
 python:
     - "3.3"
     - "2.6"
-script: python -m nose2
+script: nose2
