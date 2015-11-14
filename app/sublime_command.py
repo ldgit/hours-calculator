@@ -5,7 +5,6 @@ class SublimeCommand:
     def calculate_hours(self, edit, view):
         calculator = HoursCalculator()
         lines = self._get_selected_lines(view)
-        print(lines, calculator.add(*lines))
         view.insert(edit, view.sel()[-1].end(), '\n' + calculator.add(*lines))
 
     def _get_selected_lines(self, view):

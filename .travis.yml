@@ -1,6 +1,7 @@
 language: python
-install: true
+install:
+    - pip install nose2
 python:
     - "3.3"
     - "2.6"
-script: python -m unittest
+script: python -m nose2
