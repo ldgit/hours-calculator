@@ -19,6 +19,9 @@ class TestHoursCalculator(unittest.TestCase):
         self.assertEqual("02:53", self.calculator.add("02:53"))
         self.assertEqual("02:03", self.calculator.add("2:03"))
 
+    def test_ignore_leading_plus_sign(self):
+        self.assertEqual('01:00', self.calculator.add("+1:00"))
+
     def test_add_one_hour_and_sixty_minutes_equals_two_hours(self):
         self.assertEqual("02:00", self.calculator.add("1:60"))
 
@@ -75,9 +78,9 @@ class TestHoursCalculator(unittest.TestCase):
         self.assertEqual("05:00", self.calculator.add("1:65", "-1.00", '4.70', '-0.75'))
 
     def test_invalid_inputs_return_NaN_string(self):
-        self.assertEqual("NaN", self.calculator.add("1:1:65"))
-        self.assertEqual("NaN", self.calculator.add("aaa"))
-        self.assertEqual("NaN", self.calculator.add("a:0b"))
+        self.assertEqual("Invalid hour value: \"1:1:65\"", self.calculator.add("1:1:65"))
+        self.assertEqual("Invalid hour value: \"aaa\"", self.calculator.add("aaa"))
+        self.assertEqual("Invalid hour value: \"a:0b\"", self.calculator.add("a:0b"))
 
     def test_if_any_one_of_the_inputs_is_invalid_return_NaN(self):
-        self.assertEqual("NaN", self.calculator.add("1:00", "1:1:65", "1:00", "1:00"))
+        self.assertEqual("Invalid hour value: \"1:1:65\"", self.calculator.add("1:00", "1:1:65", "1:00", "1:00"))

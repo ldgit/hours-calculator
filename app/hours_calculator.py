@@ -15,16 +15,16 @@ class HoursCalculator():
             if hour == '':
                 continue
             if not self._is_valid_format(hour):
-                return 'NaN'
+                return 'Invalid hour value: "{0}"'.format(hour)
             total_minutes += self._calculate_total_minutes_from_string(hour.replace('.', ':'))
 
         total_hours = int(total_minutes / 60)
         remaining_minutes = abs(total_minutes) % 60
 
         if total_minutes < 0 <= total_hours:
-            return str.format('-{0:02d}:{1:02d}', total_hours, abs(remaining_minutes))
+            return '-{0:02d}:{1:02d}'.format(total_hours, remaining_minutes)
 
-        return str.format('{0:02d}:{1:02d}', total_hours, abs(remaining_minutes))
+        return '{0:02d}:{1:02d}'.format(total_hours, remaining_minutes)
 
     def _calculate_total_minutes_from_string(self, time_string):
         change_sign = False
@@ -44,6 +44,6 @@ class HoursCalculator():
         return -total_minutes if change_sign else total_minutes
 
     def _is_valid_format(self, hour):
-        pattern = re.compile('^\s*-{0,1}\d+[.:]\d+\s*$')
+        pattern = re.compile('^\s*[+-]{0,1}\d+[.:]\d+\s*$')
 
         return pattern.search(hour) is not None
