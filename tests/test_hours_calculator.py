@@ -85,3 +85,9 @@ class TestHoursCalculator(unittest.TestCase):
 
     def test_if_any_one_of_the_inputs_is_invalid_return_NaN(self):
         self.assertEqual("Invalid hour value: \"1:1:65\"", self.calculator.add("1:00", "1:1:65", "1:00", "1:00"))
+
+    def test_call_from_command_line(self):
+        import subprocess
+        popen = subprocess.Popen(['python', '../app/hours_calculator.py', '1:00', '2:30', '-3:00'],
+                                 stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+        self.assertEqual(b'00:30', popen.stdout.readlines()[0].rstrip())
