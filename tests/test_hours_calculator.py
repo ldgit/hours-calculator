@@ -33,6 +33,7 @@ class TestHoursCalculator(unittest.TestCase):
 
     def test_add_zero(self):
         self.assertEqual("00:00", self.calculator.add("0:00"))
+        self.assertEqual("01:00", self.calculator.add("1:00", "0:00"))
 
     def test_add_two_time_values(self):
         self.assertEqual("00:00", self.calculator.add("0:0", "0:0"))

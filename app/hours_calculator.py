@@ -2,13 +2,13 @@ from __future__ import division
 import re
 
 
-class HoursCalculator():
+class HoursCalculator:
     def add(self, *args):
         """
         :param list[str] args:
         :return: str
         """
-        total_minutes = 0;
+        total_minutes = 0
 
         for hour in args:
             hour = hour.strip()
@@ -44,6 +44,13 @@ class HoursCalculator():
         return -total_minutes if change_sign else total_minutes
 
     def _is_valid_format(self, hour):
-        pattern = re.compile('^\s*[+-]{0,1}\d+[.:]\d+\s*$')
+        pattern = re.compile('^\s*[+-]?\d+[.:]\d+\s*$')
 
         return pattern.search(hour) is not None
+
+
+if __name__ == '__main__':
+    import sys
+
+    calc = HoursCalculator()
+    print(calc.add(*sys.argv[1:]))
