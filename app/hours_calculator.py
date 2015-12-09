@@ -34,10 +34,7 @@ class HoursCalculator:
 
         time_list = time_string.split(':')
         hours = int(time_list[0])
-        try:
-            minutes = int(time_list[1])
-        except IndexError:
-            minutes = 0
+        minutes = int(time_list[1])
 
         total_minutes = minutes + hours * 60
 
@@ -52,5 +49,4 @@ class HoursCalculator:
 if __name__ == '__main__':
     import sys
 
-    calc = HoursCalculator()
-    print(calc.add(*sys.argv[1:]))
+    print(HoursCalculator().add(*sys.argv[1:]))

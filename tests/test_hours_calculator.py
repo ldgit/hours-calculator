@@ -55,6 +55,7 @@ class TestHoursCalculator(unittest.TestCase):
     def test_add_positive_with_negative_hours(self):
         self.assertEqual("00:10", self.calculator.add("1:10", "-1:00"))
         self.assertEqual("00:00", self.calculator.add("1:10", "-1:10"))
+        self.assertEqual("-00:05", self.calculator.add("1:10", "-1:15"))
         self.assertEqual("00:05", self.calculator.add("2:10", "-1:65"), 'Negative hour with 65 minutes')
 
     def test_add_multiple_negative_hours(self):

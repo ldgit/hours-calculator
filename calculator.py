@@ -10,5 +10,4 @@ except ValueError:
 
 class CalculateHoursCommand(sublime_plugin.TextCommand):
     def run(self, edit):
-        command = SublimeCommand()
-        command.calculate_hours(edit, self.view)
+        SublimeCommand().calculate_hours(edit, self.view)
