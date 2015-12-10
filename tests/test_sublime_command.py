@@ -83,3 +83,6 @@ class TestSublimeCommand(unittest.TestCase):
 
     def assertThirdInsertParameterIsCalculationResult(self, expected_calculation_result):
         self.assertEqual(expected_calculation_result, self.view.third_insert_parameter)
+
+    def test_fail(self):
+        self.fail('just a test')
