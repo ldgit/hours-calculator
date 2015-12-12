@@ -12,8 +12,8 @@ class TestHoursCalculator(unittest.TestCase):
     def test_add_with_one_parameter_returns_that_parameter(self):
         self.assertEqual("02:53", self.calculator.add("2:53"))
 
-    def test_add_replace_dot_with_colon(self):
-        self.assertEqual("02:53", self.calculator.add("2.53"))
+    # def test_add_replace_dot_with_colon(self):
+    #     self.assertEqual("02:53", self.calculator.add("2.53"))
 
     def test_add_ignore_leading_zero(self):
         self.assertEqual("02:53", self.calculator.add("02:53"))
@@ -40,7 +40,7 @@ class TestHoursCalculator(unittest.TestCase):
         self.assertEqual("01:15", self.calculator.add("1:15", "0:00"))
         self.assertEqual("02:15", self.calculator.add("1:15", "1:00"))
         self.assertEqual("03:15", self.calculator.add("1:15", "1:60"))
-        self.assertEqual("04:15", self.calculator.add("1:75", "01.60"))
+        self.assertEqual("04:15", self.calculator.add("1:75", "01:60"))
 
     def test_add_multiple_time_values(self):
         self.assertEqual("07:10", self.calculator.add("1:50", "2:35", "2:45"))
@@ -60,7 +60,7 @@ class TestHoursCalculator(unittest.TestCase):
 
     def test_add_multiple_negative_hours(self):
         self.assertEqual("-2:10", self.calculator.add("-1:10", "-1:00"))
-        self.assertEqual("-3:40", self.calculator.add("-1:10", "-1:00", "-1.30"))
+        self.assertEqual("-3:40", self.calculator.add("-1:10", "-1:00", "-1:30"))
 
     def test_large_hours_and_minutes(self):
         self.assertEqual("113:35", self.calculator.add("111:155"))
@@ -76,8 +76,22 @@ class TestHoursCalculator(unittest.TestCase):
     def test_input_hours_as_array(self):
         self.assertEqual("-1:20", self.calculator.add(*[u'1:00', u'-2:20']))
 
+    def test_decimal_inputs(self):
+        self.assertEqual("01:30", self.calculator.add("1.5"))
+        self.assertEqual("01:12", self.calculator.add("1.2"))
+        self.assertEqual("04:42", self.calculator.add("4.7"))
+        self.assertEqual("02:42", self.calculator.add("1.2", "1.5"))
+    
+    def test_negative_decimal_inputs(self):
+        self.assertEqual("-4:42", self.calculator.add("-4.7"))
+        self.assertEqual("-00:18", self.calculator.add("1.2", "-1.5"))
+    
+    def test_round_down_decimal_inputs(self):
+        self.assertEqual("00:58", self.calculator.add("0.97"))
+        self.assertEqual("00:13", self.calculator.add("0.23"))
+
     def test_integration(self):
-        self.assertEqual("05:00", self.calculator.add("1:65", "-1.00", '4.70', '-0.75'))
+        self.assertEqual("05:02", self.calculator.add("1:65", "-1.00", '4.70', '-0.75'))
 
     def test_invalid_inputs_return_NaN_string(self):
         self.assertEqual("Invalid hour value: \"1:1:65\"", self.calculator.add("1:1:65"))

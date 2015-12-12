@@ -1,5 +1,7 @@
 from __future__ import division
 import re
+from .hour_notation_strategy import HourNotationStrategy
+from .decimal_notation_strategy import DecimalNotationStrategy
 
 
 class HoursCalculator:
@@ -16,7 +18,7 @@ class HoursCalculator:
                 continue
             if not self._is_valid_format(hour):
                 return 'Invalid hour value: "{0}"'.format(hour)
-            total_minutes += self._calculate_total_minutes_from_string(hour.replace('.', ':'))
+            total_minutes += self._get_calculation_strategy(hour).calculate_minutes(hour)
 
         total_hours = int(total_minutes / 60)
         remaining_minutes = abs(total_minutes) % 60
@@ -26,19 +28,11 @@ class HoursCalculator:
 
         return '{0:02d}:{1:02d}'.format(total_hours, remaining_minutes)
 
-    def _calculate_total_minutes_from_string(self, time_string):
-        change_sign = False
-        if time_string.startswith('-'):
-            time_string = time_string[1:]
-            change_sign = True
-
-        time_list = time_string.split(':')
-        hours = int(time_list[0])
-        minutes = int(time_list[1])
-
-        total_minutes = minutes + hours * 60
-
-        return -total_minutes if change_sign else total_minutes
+    def _get_calculation_strategy(self, time_string):
+        if ':' in time_string:
+            return HourNotationStrategy()
+        else:
+            return DecimalNotationStrategy()
 
     def _is_valid_format(self, hour):
         pattern = re.compile('^\s*[+-]?\d+[.:]\d+\s*$')
