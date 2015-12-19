@@ -3,11 +3,13 @@ import sublime, sublime_plugin
 try:
     # ST 3
     from .app.sublime_command import SublimeCommand
+    from .app.settings import Settings
 except ValueError:
     # ST 2
     from app.sublime_command import SublimeCommand
+    from app.settings import Settings
 
 
 class CalculateHoursCommand(sublime_plugin.TextCommand):
     def run(self, edit):
-        SublimeCommand().calculate_hours(edit, self.view)
+        SublimeCommand(Settings(sublime)).calculate_hours(edit, self.view)

@@ -7,11 +7,17 @@ from tests.region_stub import EmptyRegionStub, RegionStub
 class TestSublimeCommand(unittest.TestCase):
     def setUp(self):
         # SUT
-        self.command = SublimeCommand()
+        self.settings = SettingsStub()
+        self.settings.separator = ''
+        self.command = SublimeCommand(self.settings)
 
         # Command inputs
         self.view = ViewSpy()
         self.edit = 'just some edit placeholder'
+
+        # Sublime regions
+        self.first_region = RegionStub()
+        self.second_region = RegionStub()
 
     def test_empty_region_selected(self):
         self.view.sel_return = [EmptyRegionStub()]
@@ -53,16 +59,25 @@ class TestSublimeCommand(unittest.TestCase):
         """
         Tests that the selection in sublime text is correctly converted to python list.
         """
-        self.first_region = RegionStub()
-        self.second_region = RegionStub()
-        self.view.sel_return = [self.first_region, self.second_region]
-        self.view.substr = self.substr_replacement
+        self._setup_selected_lines_so_that_calculation_result_is_13_hours()
         expected_lines = ["12:00", "1:00"]
 
         self.command.calculate_hours(self.edit, self.view)
 
         self.assertEqual(expected_lines, self.command._get_selected_lines(self.view))
         self.assertThirdInsertParameterIsCalculationResult("\n13:00")
+
+    def test_result_separator_is_shown(self):
+        self._setup_selected_lines_so_that_calculation_result_is_13_hours()
+        self.settings.separator = '===='
+
+        self.command.calculate_hours(self.edit, self.view)
+
+        self.assertThirdInsertParameterIsCalculationResult("\n====\n13:00")
+
+    def _setup_selected_lines_so_that_calculation_result_is_13_hours(self):
+        self.view.sel_return = [self.first_region, self.second_region]
+        self.view.substr = self.substr_replacement
 
     def substr_replacement(self, region):
         """
@@ -83,3 +98,8 @@ class TestSublimeCommand(unittest.TestCase):
 
     def assertThirdInsertParameterIsCalculationResult(self, expected_calculation_result):
         self.assertEqual(expected_calculation_result, self.view.third_insert_parameter)
+
+
+class SettingsStub:
+    def __init__(self):
+        self.separator = None

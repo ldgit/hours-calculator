@@ -20,9 +20,8 @@ class TestSettings(unittest.TestCase):
         file_to_find = path.join(settings_dir, self.sublime.settings_file_to_load)
         self.assertTrue(path.isfile(file_to_find),
                         'Could not find file "{0}" in path "{1}"'.format(
-                            self.sublime.settings_file_to_load, file_to_find
+                                self.sublime.settings_file_to_load, file_to_find
                         ))
-
 
     def test_correct_settings_file_is_loaded(self):
         self.settings.separator
