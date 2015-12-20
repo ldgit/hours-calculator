@@ -1,5 +1,5 @@
 class Settings():
-    PLUGIN_FOLDER = 'Calculator'
+    PLUGIN_FOLDER = 'hours-calculator'
 
     def __init__(self, sublime):
         self._settings_file = self.PLUGIN_FOLDER + '.sublime-settings'

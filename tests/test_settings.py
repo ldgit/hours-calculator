@@ -9,7 +9,7 @@ class TestSettings(unittest.TestCase):
 
     def test_folder_and_settings_file_name(self):
         self.settings.separator
-        self.assertEqual('Calculator.sublime-settings', self.sublime.settings_file_to_load)
+        self.assertEqual('hours-calculator.sublime-settings', self.sublime.settings_file_to_load)
 
     def test_settings_file_actually_exists(self):
         from os import path
