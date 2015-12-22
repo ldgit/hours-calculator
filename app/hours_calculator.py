@@ -14,10 +14,8 @@ class HoursCalculator:
 
         for hour in args:
             hour = hour.strip()
-            if hour == '':
+            if not self._is_valid_format(hour) or hour == '':
                 continue
-            if not self._is_valid_format(hour):
-                return 'Invalid hour value: "{0}"'.format(hour)
             total_minutes += self._get_calculation_strategy(hour).calculate_minutes(hour)
 
         total_hours = int(total_minutes / 60)

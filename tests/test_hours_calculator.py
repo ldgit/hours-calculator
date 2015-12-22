@@ -12,9 +12,6 @@ class TestHoursCalculator(unittest.TestCase):
     def test_add_with_one_parameter_returns_that_parameter(self):
         self.assertEqual("02:53", self.calculator.add("2:53"))
 
-    # def test_add_replace_dot_with_colon(self):
-    #     self.assertEqual("02:53", self.calculator.add("2.53"))
-
     def test_add_ignore_leading_zero(self):
         self.assertEqual("02:53", self.calculator.add("02:53"))
         self.assertEqual("02:03", self.calculator.add("2:03"))
@@ -93,10 +90,7 @@ class TestHoursCalculator(unittest.TestCase):
     def test_integration(self):
         self.assertEqual("05:02", self.calculator.add("1:65", "-1.00", '4.70', '-0.75'))
 
-    def test_invalid_inputs_return_NaN_string(self):
-        self.assertEqual("Invalid hour value: \"1:1:65\"", self.calculator.add("1:1:65"))
-        self.assertEqual("Invalid hour value: \"aaa\"", self.calculator.add("aaa"))
-        self.assertEqual("Invalid hour value: \"a:0b\"", self.calculator.add("a:0b"))
-
-    def test_if_any_one_of_the_inputs_is_invalid_return_NaN(self):
-        self.assertEqual("Invalid hour value: \"1:1:65\"", self.calculator.add("1:00", "1:1:65", "1:00", "1:00"))
+    def test_skip_invalid_inputs(self):
+        self.assertEqual("00:00", self.calculator.add("1:1:65"))
+        self.assertEqual("01:00", self.calculator.add("aaa", '1:00'))
+        self.assertEqual("01:00", self.calculator.add("1:00", 'a:0b'))
