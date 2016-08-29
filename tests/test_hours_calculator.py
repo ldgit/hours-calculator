@@ -94,3 +94,24 @@ class TestHoursCalculator(unittest.TestCase):
         self.assertEqual("00:00", self.calculator.add("1:1:65"))
         self.assertEqual("01:00", self.calculator.add("aaa", '1:00'))
         self.assertEqual("01:00", self.calculator.add("1:00", 'a:0b'))
+
+    def test_convert_to_seconds(self):
+        self.assertEqual("0", self.calculator.convert_to_seconds("0:00"))
+        self.assertEqual("60", self.calculator.convert_to_seconds("0:01"))
+        self.assertEqual("120", self.calculator.convert_to_seconds("0:02"))
+        self.assertEqual("3600", self.calculator.convert_to_seconds("1:00"))
+        self.assertEqual("-300", self.calculator.convert_to_seconds("-0:05"))
+
+    def test_convert_to_seconds_works_with_different_formats(self):
+        self.assertEqual("1800", self.calculator.convert_to_seconds("0.5"))
+        self.assertEqual("3600", self.calculator.convert_to_seconds("1:00"))
+        self.assertEqual("5400", self.calculator.convert_to_seconds("   1:30 "))
+
+    def test_convert_to_seconds_returns_zero_for_invalid_formats(self):
+        self.assertEqual("0", self.calculator.convert_to_seconds(""))
+        self.assertEqual("0", self.calculator.convert_to_seconds("0"))
+        self.assertEqual("0", self.calculator.convert_to_seconds("aaa"))
+        self.assertEqual("0", self.calculator.convert_to_seconds("a:0b"))
+        self.assertEqual("0", self.calculator.convert_to_seconds("1:1:65"))
+
+

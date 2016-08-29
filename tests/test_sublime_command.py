@@ -75,6 +75,19 @@ class TestSublimeCommand(unittest.TestCase):
 
         self.assertThirdInsertParameterIsCalculationResult("\n====\n13:00")
 
+    def test_convert_hours_to_seconds_single_line(self):
+        self.view.sel_return = [self.first_region]  # 12:00 hours
+        self.view.substr_return_value = "1:00"
+
+        self.command.convert_hours_to_seconds(self.edit, self.view)
+
+        self.assertThirdInsertParameterIsCalculationResult('    3600')
+        self.assertViewInsertCalledWithRegionEndAsSecondParameter('dummy region end')
+
+    def test_convert_hours_to_seconds_when_nothing_selected(self):
+        self.view.sel_return = [EmptyRegionStub()]
+        self.command.convert_hours_to_seconds(self.edit, self.view)
+
     def _setup_selected_lines_so_that_calculation_result_is_13_hours(self):
         self.view.sel_return = [self.first_region, self.second_region]
         self.view.substr = self.substr_replacement

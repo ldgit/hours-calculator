@@ -2,5 +2,9 @@
     {
         "caption": "Calculate: Total Hours From Selection",
         "command": "calculate_hours"
+    },
+    {
+        "caption": "Calculate: Seconds from hours in selection",
+        "command": "convert_hours_to_seconds"
     }
 ]

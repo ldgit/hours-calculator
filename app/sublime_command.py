@@ -10,6 +10,12 @@ class SublimeCommand:
         lines = self._get_selected_lines(view)
         view.insert(edit, view.sel()[-1].end(), '\n{0}{1}'.format(self._get_separator(), calculator.add(*lines)))
 
+    def convert_hours_to_seconds(self, edit, view):
+        calculator = HoursCalculator()
+        lines = self._get_selected_lines(view)
+        if len(lines) > 0:
+            view.insert(edit, view.sel()[-1].end(), '    ' + calculator.convert_to_seconds(lines[0]))
+
     def _get_selected_lines(self, view):
         lines = []
         for region in view.sel():
