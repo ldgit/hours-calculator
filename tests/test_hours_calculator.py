@@ -87,6 +87,12 @@ class TestHoursCalculator(unittest.TestCase):
         self.assertEqual("00:58", self.calculator.add("0.97"))
         self.assertEqual("00:13", self.calculator.add("0.23"))
 
+    def test_add_hours_without_minute_part_inputs(self):
+        self.assertEqual("02:30", self.calculator.add("1", "1.5"))
+        self.assertEqual("02:30", self.calculator.add("1", "1:30"))
+        self.assertEqual("00:30", self.calculator.add("-1", "1:30"))
+        self.assertEqual("26:30", self.calculator.add("+25", "1:30"))
+
     def test_integration(self):
         self.assertEqual("05:02", self.calculator.add("1:65", "-1.00", '4.70', '-0.75'))
 

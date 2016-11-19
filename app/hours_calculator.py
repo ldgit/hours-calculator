@@ -16,6 +16,7 @@ class HoursCalculator:
             hour = hour.strip()
             if not self._is_valid_format(hour):
                 continue
+
             total_minutes += self._get_calculation_strategy(hour).calculate_minutes(hour)
 
         total_hours = int(total_minutes / 60)
@@ -41,9 +42,13 @@ class HoursCalculator:
             return DecimalNotationStrategy()
 
     def _is_valid_format(self, hour):
-        pattern = re.compile('^\s*[+-]?\d+[.:]\d+\s*$')
+        just_hours_pattern = re.compile('^\s*[+-]?\d+$')
+        if just_hours_pattern.search(hour) is not None:
+            return True
 
-        return pattern.search(hour) is not None
+        full_pattern = re.compile('^\s*[+-]?\d+[.:]\d+\s*$')
+
+        return full_pattern.search(hour) is not None
 
 
 if __name__ == '__main__':
